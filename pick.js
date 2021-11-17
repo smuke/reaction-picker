@@ -47,14 +47,14 @@ exports.pick = (message, messageID, emoji, winnerAmount) => {
                     winnersFields.push({ name: `${winners[i].username}#${winners[i].discriminator}`, value: `${winners[i].toString()}` });
                 }
 
-                sendEmbed(message.channel, `${winnerAmount} winners`, emoji, winnersFields, `Message ID: ${messageID}`);
+                sendEmbed(message.channel, `${winnerAmount} winners`, emoji, winnersFields, messageID, message.guild.iconURL());
             }
             // 1 winner
             else {
                 // One random winner
                 const winner = users.random();
 
-                sendEmbed(message.channel, "Winner", "", { name: `${winner.username}#${winner.discriminator}`, value: `${emoji} ${winner.toString()}` }, `Message ID: ${messageID}`);
+                sendEmbed(message.channel, "Winner", "", { name: `${winner.username}#${winner.discriminator}`, value: `${emoji} ${winner.toString()}` }, messageID, winner.avatarURL());
             }
         });
     })
