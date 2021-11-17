@@ -11,13 +11,9 @@ exports.pick = (message, messageID, emoji, winnerAmount) => {
     
     // Fetch message
     message.channel.messages.fetch(messageID).then(pickMessage => {
-        console.log(`Fetched message ${messageID}`);
         // Get reactions with emoji
         pickMessage.reactions.cache.get(newEmoji).users.fetch().then(users => {
 
-            console.log(users);
-
-            console.log(users);
             // If winner amount is too much
             if (winnerAmount > 15) {
                 sendError(message.channel, "Too many winners", `There is a maximum of 15 winners.`);
