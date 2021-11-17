@@ -33,7 +33,7 @@ client.on("messageCreate", message => {
 
                 pick(message, messageID, emoji, winnerAmount);
             }
-            // Inccorrect usage
+            // Incorrect usage
             else {
                 sendError(message.channel, "Incorrect Usage", `Usage: \`${config.prefix}pick <message ID> <emoji> [# of winners]\``);
                 return;
