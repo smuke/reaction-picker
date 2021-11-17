@@ -1,13 +1,13 @@
 const { MessageEmbed } = require("discord.js");
 
-exports.sendEmbed = (channel, title, message, fields, messageID) => {
+exports.sendEmbed = (channel, title, message, fields, footer) => {
     if (fields != undefined) {
         const embed = new MessageEmbed()
             .setTitle(title)
             .setDescription(message)
             .setFields(fields)
             .setColor("#2a2a2a")
-            .setFooter(`Message ID: ${messageID}`);
+            .setFooter(footer);
 
         channel.send({ embeds: [embed] });
     }
@@ -16,7 +16,7 @@ exports.sendEmbed = (channel, title, message, fields, messageID) => {
             .setTitle(title)
             .setDescription(message)
             .setColor("#2a2a2a")
-            .setFooter(`Message ID: ${messageID}`);
+            .setFooter(footer);
             
         channel.send({ embeds: [embed] });
     }

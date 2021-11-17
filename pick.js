@@ -2,8 +2,8 @@ const config = require("./config.json");
 const { sendEmbed, sendError } = require("./send.js");
 
 exports.pick = (message, messageID, emoji, winnerAmount) => {
-    if (/\d/.test(emoji)) {
-        var newEmoji = emoji.match(/\d+/g).toString();
+    if (/(?<=:)\d+/.test(emoji)) {
+        var newEmoji = emoji.match(/(?<=:)\d+/g).toString();
     }
     else {
         var newEmoji = emoji;
@@ -11,11 +11,13 @@ exports.pick = (message, messageID, emoji, winnerAmount) => {
     
     // Fetch message
     message.channel.messages.fetch(messageID).then(pickMessage => {
+        console.log(`Fetched message ${messageID}`);
         // Get reactions with emoji
-        const reactions = pickMessage.reactions.cache.get(newEmoji);
+        pickMessage.reactions.cache.get(newEmoji).users.fetch().then(users => {
 
-        // Get users
-        reactions.users.fetch().then(users => {
+            console.log(users);
+
+            console.log(users);
             // If winner amount is too much
             if (winnerAmount > 15) {
                 sendError(message.channel, "Too many winners", `There is a maximum of 15 winners.`);
@@ -45,18 +47,19 @@ exports.pick = (message, messageID, emoji, winnerAmount) => {
                     winnersFields.push({ name: `${winners[i].username}#${winners[i].discriminator}`, value: `${winners[i].toString()}` });
                 }
 
-                sendEmbed(message.channel, `${winnerAmount} winners`, emoji, winnersFields, messageID);
+                sendEmbed(message.channel, `${winnerAmount} winners`, emoji, winnersFields, `Message ID: ${messageID}`);
             }
             // 1 winner
             else {
                 // One random winner
                 const winner = users.random();
 
-                sendEmbed(message.channel, "Winner", "", { name: `${winner.username}#${winner.discriminator}`, value: `${emoji} ${winner.toString()}` }, messageID);
+                sendEmbed(message.channel, "Winner", "", { name: `${winner.username}#${winner.discriminator}`, value: `${emoji} ${winner.toString()}` }, `Message ID: ${messageID}`);
             }
         });
     })
     .catch(err => {
+        console.log(err);
         sendError(message.channel, "Could not get reactions", `Could not get reactions from message ID ${messageID} in this channel.\nUse \`${config.prefix}help\` for help.`);
     });
 }
