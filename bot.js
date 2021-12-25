@@ -9,7 +9,14 @@ const client = new Client({ intents: myIntents});
 
 client.once("ready", () => {
     console.log("Reaction Picker started!");
+
+    client.user.setActivity("!!pick <msg ID> <emoji>");
+    setInterval(setActivity, 300000);
 });
+
+function setActivity() {
+    client.user.setActivity("!!pick");
+}
 
 client.on("messageCreate", message => {
     if (message.author.bot) return;
