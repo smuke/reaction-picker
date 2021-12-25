@@ -39,8 +39,17 @@ exports.pick = (message, messageID, emoji, winnerAmount) => {
 
                 const winnersFields = [];
 
-                for (i in winners) {
-                    winnersFields.push({ name: `${winners[i].username}#${winners[i].discriminator}`, value: `${winners[i].toString()}` });
+                // More than 10 winners, inline fields
+                if (winnerAmount > 10) {
+                    for (i in winners) {
+                        winnersFields.push({ name: `${winners[i].username}#${winners[i].discriminator}`, value: `${winners[i].toString()}`, inline: true });
+                    }
+                }
+                // Less than 10 winners, no inline
+                else {
+                    for (i in winners) {
+                        winnersFields.push({ name: `${winners[i].username}#${winners[i].discriminator}`, value: `${winners[i].toString()}` });
+                    }
                 }
 
                 sendEmbed(message.channel, `${winnerAmount} winners`, emoji, winnersFields, messageID, message.guild.iconURL());
