@@ -15,7 +15,7 @@ client.once("ready", () => {
 });
 
 function setActivity() {
-    client.user.setActivity(`${config.prefix}pick`);
+    client.user.setActivity(`${config.prefix}pick <msg ID> <emoji>`);
 }
 
 client.on("messageCreate", message => {
