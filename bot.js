@@ -40,6 +40,20 @@ client.on("messageCreate", message => {
 
                 pick(message, messageID, emoji, winnerAmount);
             }
+            // Incorrect usage with info
+            else if (args.length === 0) {
+                sendEmbed(
+                    message.channel,
+                    "", 
+                    "",
+                    [
+                        { name: "Usage", value: `To pick reaction winners from a message, use:\n\`${config.prefix}pick <message ID> <emoji> [# of winners]\`` },
+                        { name: "Examples", value: `${config.prefix}pick 909958870426861579 <:EZ:855901750379806780>\n${config.prefix}pick 909958516712820836 :grin: 2`},
+                        { name: "Links", value: "*<:pepega:739989836592709684> [How do I find the message ID?](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)*\n[Invite Bot](https://discord.com/oauth2/authorize?client_id=768252137108537374&scope=bot&permissions=8) - [GitHub](https://github.com/smuke/)\n" }
+                    ],
+                    {}
+                );
+            }
             // Incorrect usage
             else {
                 sendError(message.channel, "Incorrect Usage", `Usage: \`${config.prefix}pick <message ID> <emoji> [# of winners]\``);
